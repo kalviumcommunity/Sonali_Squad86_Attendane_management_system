@@ -1,16 +1,17 @@
+
 package com.school;
 
 public class Course {
-    String courseId;
-    String courseName;
+    private static int nextCourseIdCounter = 101; // auto ID generator
+    private String courseName;
+    private int courseId;
 
-    public void setDetails(String id, String cName) {
-        this.courseId = id;
-        this.courseName = cName;
+    public Course(String courseName) {
+        this.courseName = courseName;
+        this.courseId = nextCourseIdCounter++;
     }
 
     public void displayDetails() {
-        System.out.println("Course ID: " + this.courseId + ", Name: " + this.courseName);
-    
-}
+        System.out.println("Course: " + courseName + " (C" + courseId + ")");
+    }
 }
