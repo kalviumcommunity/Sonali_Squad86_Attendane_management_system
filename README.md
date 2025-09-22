@@ -38,3 +38,16 @@ This is a 10-part code-along project to build a comprehensive school attendance 
 1. Navigate to the project root directory.
 2. Compile: javac src/com/school/*.java
 3. Run: java -cp src com.school.Main
+
+
+## Part 4 — Data Encapsulation & Attendance Recording Validation
+
+What's new:
+- Student and Course fields made private with public getters.
+- New `AttendanceRecord` class with validation for status ("Present" / "Absent").
+- Invalid statuses are normalized to "Invalid" and a warning is printed at creation.
+- Demonstration in Main.java that constructs attendance records (including an invalid one) and prints the attendance log.
+
+How to build & run:
+1. javac -d out src/com/school/*.java
+2. java -cp out com.school.Main

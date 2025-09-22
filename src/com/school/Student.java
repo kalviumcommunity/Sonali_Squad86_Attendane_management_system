@@ -10,6 +10,15 @@ public class Student {
         this.studentId = nextStudentIdCounter++;
     }
 
+    // getters (encapsulation)
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void displayDetails() {
         System.out.println("Student ID: S" + studentId + ", Name: " + name);
     }
