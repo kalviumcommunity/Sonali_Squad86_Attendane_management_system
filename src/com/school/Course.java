@@ -11,6 +11,15 @@ public class Course {
         this.courseId = nextCourseIdCounter++;
     }
 
+    // getters (encapsulation)
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
     public void displayDetails() {
         System.out.println("Course: " + courseName + " (C" + courseId + ")");
     }
