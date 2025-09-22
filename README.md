@@ -51,3 +51,17 @@ What's new:
 How to build & run:
 1. javac -d out src/com/school/*.java
 2. java -cp out com.school.Main
+
+
+## Part 5 — Person inheritance hierarchy
+
+Added:
+- `Person` base class with centralized ID assignment and name.
+- `Student`, `Teacher`, `Staff` classes extend `Person`.
+- Student now has gradeLevel; Teacher has subject; Staff has staffRole.
+- Main demonstrates creation and display of Students/Teachers/Staff and uses student.getId() for attendance.
+
+Build & run:
+1. javac -d out src/com/school/*.java
+2. java -cp out com.school.Main
+
