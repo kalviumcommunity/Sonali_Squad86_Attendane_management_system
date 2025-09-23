@@ -7,30 +7,27 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to the Attendance Management System!");
 
-        // Create Persons (Students now have grade)
-        Student[] students = {
-            new Student("Sonali", "10"),
-            new Student("Charitha", "10"),
-            new Student("Sravani", "11"),
-            new Student("Sharon", "12")
-        };
+        // Create Students
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(new Student("Sonali", "10"));
+        students.add(new Student("Charitha", "10"));
+        students.add(new Student("Sravani", "11"));
+        students.add(new Student("Sharon", "12"));
 
-        // Teachers and staff
-        Teacher[] teachers = {
-            new Teacher("Mr. Rao", "DBMS"),
-            new Teacher("Ms. Anita", "OOPS")
-        };
+        // Teachers and staff (left in lists if needed elsewhere)
+        ArrayList<Teacher> teachers = new ArrayList<>();
+        teachers.add(new Teacher("Mr. Rao", "DBMS"));
+        teachers.add(new Teacher("Ms. Anita", "OOPS"));
 
-        Staff[] staffs = {
-            new Staff("Mr. Kumar", "Clerk"),
-            new Staff("Ms. Maya", "Librarian")
-        };
+        ArrayList<Staff> staffs = new ArrayList<>();
+        staffs.add(new Staff("Mr. Kumar", "Clerk"));
+        staffs.add(new Staff("Ms. Maya", "Librarian"));
 
-        Course[] courses = {
-            new Course("DBMS"),
-            new Course("OOPS"),
-            new Course("Computer Networks")
-        };
+        // Courses
+        ArrayList<Course> courses = new ArrayList<>();
+        courses.add(new Course("DBMS"));
+        courses.add(new Course("OOPS"));
+        courses.add(new Course("Computer Networks"));
 
         System.out.println("\n--- Student List ---");
         for (Student s : students) {
@@ -52,17 +49,31 @@ public class Main {
             c.displayDetails();
         }
 
-        // --- Attendance recording (uses student.getId()) ---
-        List<AttendanceRecord> attendanceLog = new ArrayList<>();
-
-        attendanceLog.add(new AttendanceRecord(students[0].getId(), courses[0].getCourseId(), "Present"));
-        attendanceLog.add(new AttendanceRecord(students[1].getId(), courses[1].getCourseId(), "Absent"));
-        attendanceLog.add(new AttendanceRecord(students[2].getId(), courses[2].getCourseId(), "present"));
-        attendanceLog.add(new AttendanceRecord(students[3].getId(), courses[0].getCourseId(), "On Leave")); // invalid
+        // Attendance records
+        ArrayList<AttendanceRecord> attendanceLog = new ArrayList<>();
+        // use getId() and getCourseId()
+        attendanceLog.add(new AttendanceRecord(students.get(0).getId(), courses.get(0).getCourseId(), "Present"));
+        attendanceLog.add(new AttendanceRecord(students.get(1).getId(), courses.get(1).getCourseId(), "Absent"));
+        attendanceLog.add(new AttendanceRecord(students.get(2).getId(), courses.get(2).getCourseId(), "present"));
+        attendanceLog.add(new AttendanceRecord(students.get(3).getId(), courses.get(0).getCourseId(), "On Leave")); // invalid
 
         System.out.println("\n--- Attendance Log ---");
         for (AttendanceRecord r : attendanceLog) {
             r.displayRecord();
         }
+
+        // Persist everything to files using FileStorageService
+        FileStorageService storage = new FileStorageService();
+
+        // Save students (id,name,grade)
+        storage.saveData(students, "students.txt");
+
+        // Save courses (courseId,courseName)
+        storage.saveData(courses, "courses.txt");
+
+        // Save attendance (studentId,courseId,status)
+        storage.saveData(attendanceLog, "attendance_log.txt");
+
+        System.out.println("\nPersistence complete. Check students.txt, courses.txt, attendance_log.txt in the project root.");
     }
 }
