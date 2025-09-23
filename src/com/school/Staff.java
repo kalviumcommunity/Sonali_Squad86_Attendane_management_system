@@ -12,6 +12,7 @@ public class Staff extends Person {
         return staffRole;
     }
 
+    
     @Override
     public void displayDetails() {
         super.displayDetails();
