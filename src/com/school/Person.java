@@ -1,6 +1,6 @@
 package com.school;
 
-public class Person {
+public abstract class Person {
     private static int nextIdCounter = 1;   
     protected int id;
     protected String name;
