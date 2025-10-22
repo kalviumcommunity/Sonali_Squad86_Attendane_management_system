@@ -1,45 +1,32 @@
 package com.school;
 
 public class AttendanceRecord implements Storable {
-    private int studentId;
-    private int courseId;
-    private String status; // "Present", "Absent", or "Invalid"
+    private Person person;
+    private Course course;
+    private String status;
 
-    public AttendanceRecord(int studentId, int courseId, String status) {
-        this.studentId = studentId;
-        this.courseId = courseId;
-
-        if (status == null) {
-            this.status = "Invalid";
-            System.out.println("Warning: attendance status is null for student S" + studentId + " course C" + courseId + ". Marked as Invalid.");
-        } else if (status.equalsIgnoreCase("Present") || status.equalsIgnoreCase("Absent")) {
-            // Normalize to Title case
+    public AttendanceRecord(Person person, Course course, String status) {
+        this.person = person;
+        this.course = course;
+        if (status == null) status = "Invalid";
+        if (status.equalsIgnoreCase("Present") || status.equalsIgnoreCase("Absent")) {
             this.status = status.substring(0,1).toUpperCase() + status.substring(1).toLowerCase();
         } else {
+            System.out.println("Warning: invalid attendance status '" + status + "' for " + person.getName() + ". Marked as Invalid.");
             this.status = "Invalid";
-            System.out.println("Warning: invalid attendance status '" + status + "' for student S" + studentId + " course C" + courseId + ". Marked as Invalid.");
         }
     }
 
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+    public Person getPerson() { return person; }
+    public Course getCourse() { return course; }
+    public String getStatus() { return status; }
 
     public void displayRecord() {
-        System.out.println("Attendance - Student S" + studentId + ", Course C" + courseId + " : " + status);
+        System.out.println("Attendance → " + person.getName() + " (" + person.getId() + ") | Course: " + course.getCourseName() + " | Status: " + status);
     }
 
     @Override
     public String toDataString() {
-        // studentId,courseId,status
-        return studentId + "," + courseId + "," + status;
+        return person.getId() + "," + course.getCourseId() + "," + status;
     }
 }
