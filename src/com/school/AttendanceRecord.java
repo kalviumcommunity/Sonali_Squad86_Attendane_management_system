@@ -20,6 +20,7 @@ public class AttendanceRecord implements Storable {
     public Person getPerson() { return person; }
     public Course getCourse() { return course; }
     public String getStatus() { return status; }
+    public Student getStudent() { return (Student) person; }
 
     public void displayRecord() {
         System.out.println("Attendance → " + person.getName() + " (" + person.getId() + ") | Course: " + course.getCourseName() + " | Status: " + status);
@@ -28,5 +29,10 @@ public class AttendanceRecord implements Storable {
     @Override
     public String toDataString() {
         return person.getId() + "," + course.getCourseId() + "," + status;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendance → " + person.getName() + " (" + person.getId() + ") | Course: " + course.getCourseName() + " | Status: " + status;
     }
 }
