@@ -18,6 +18,14 @@ public class Course implements Storable {
         return courseName;
     }
 
+    public int getId() {
+        return courseId;
+    }
+
+    public String getName() {
+        return courseName;
+    }
+
     public void displayDetails() {
         System.out.println("Course: " + courseName + " (C" + courseId + ")");
     }

@@ -12,6 +12,10 @@ public class Student extends Person implements Storable {
         return gradeLevel;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public void displayDetails() {
         super.displayDetails();
