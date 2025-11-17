@@ -1,43 +1,36 @@
 package com.school;
 
-import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
-        System.out.println("School Attendance Management — Part 08");
 
-        // Create storage service
-        FileStorageService storageService = new FileStorageService();
-        
-        // Create attendance service
-        AttendanceService attendanceService = new AttendanceService(storageService);
+        FileStorageService storage = new FileStorageService();
+        RegistrationService regService = new RegistrationService(storage);
+        AttendanceService attendanceService = new AttendanceService(storage, regService);
 
-        // Create sample students
-        List<Student> allStudents = new ArrayList<>();
-        Student sonali = new Student("Sonali", "10");
-        Student charitha = new Student("Charitha", "11");
-        allStudents.add(sonali);
-        allStudents.add(charitha);
+        // --- Registration ---
+        Student s1 = regService.registerStudent("Sonali", "10");
+        Student s2 = regService.registerStudent("Rohit", "12");
+        Teacher t1 = regService.registerTeacher("Mr. Rao", "DBMS");
+        Staff st1 = regService.registerStaff("Kiran", "Admin");
 
-        // Create sample courses
-        List<Course> allCourses = new ArrayList<>();
-        Course dbms = new Course("DBMS");
-        Course oops = new Course("OOPS");
-        allCourses.add(dbms);
-        allCourses.add(oops);
+        Course c1 = regService.createCourse("DBMS");
+        Course c2 = regService.createCourse("OOPS");
 
-        // Mark attendance using different overloaded methods
-        attendanceService.markAttendance(sonali, dbms, "Present");
-        attendanceService.markAttendance(charitha, oops, "Present");
-        attendanceService.markAttendance(1, 2, "Absent", allStudents, allCourses);
+        // --- Mark Attendance using IDs only ---
+        attendanceService.markAttendance(s1.getId(), c1.getCourseId(), "Present");
+        attendanceService.markAttendance(s2.getId(), c2.getCourseId(), "Absent");
 
-        // Display attendance using different overloaded methods
-        System.out.println("\n--- Displaying Attendance Records ---");
+        // --- Display Directory ---
+        System.out.println("\n=== School Directory ===");
+        for (Person p : regService.getAllPeople()) {
+            p.displayDetails();
+        }
+
+        // --- Display Attendance ---
         attendanceService.displayAttendanceLog();
-        attendanceService.displayAttendanceLog(sonali);
-        attendanceService.displayAttendanceLog(dbms);
 
-        // Save attendance data
+        // --- Save All Data Files ---
+        regService.saveAllRegistrations();
         attendanceService.saveAttendanceData();
     }
 }

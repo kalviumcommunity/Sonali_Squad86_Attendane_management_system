@@ -92,3 +92,11 @@ Build & run:
 2. Compile: `javac src/com/school/*.java`
 3. Run: `java -cp src com.school.Main`
 
+
+## Part 9: SOLID Service Layer — RegistrationService Added
+- Added RegistrationService for managing students, teachers, staff, and courses.
+- AttendanceService now depends on RegistrationService.
+- Main no longer manages lists; it only delegates to service classes.
+- Teacher and Staff now implement Storable.
+- All records are saved separately: students.txt, teachers.txt, staff.txt, courses.txt, attendance_log.txt.
+

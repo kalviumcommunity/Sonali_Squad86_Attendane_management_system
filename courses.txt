@@ -1,3 +1,2 @@
 101,DBMS
 102,OOPS
-103,Computer Networks
