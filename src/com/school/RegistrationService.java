@@ -1,6 +1,7 @@
 package com.school;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegistrationService {
 
@@ -15,61 +16,118 @@ public class RegistrationService {
         this.storageService = storageService;
     }
 
-    // --- Register Methods ---
+    // ===========================
+    //   STUDENT / TEACHER / STAFF REGISTRATION
+    // ===========================
+
     public Student registerStudent(String name, String grade) {
-        Student s = new Student(name, grade);
-        students.add(s);
-        return s;
+        Student student = new Student(name, grade);
+        students.add(student);
+        System.out.println("Registered Student: " + name);
+        return student;
     }
 
     public Teacher registerTeacher(String name, String subject) {
-        Teacher t = new Teacher(name, subject);
-        teachers.add(t);
-        return t;
+        Teacher teacher = new Teacher(name, subject);
+        teachers.add(teacher);
+        System.out.println("Registered Teacher: " + name);
+        return teacher;
     }
 
     public Staff registerStaff(String name, String role) {
-        Staff st = new Staff(name, role);
-        staffMembers.add(st);
-        return st;
+        Staff staff = new Staff(name, role);
+        staffMembers.add(staff);
+        System.out.println("Registered Staff: " + name);
+        return staff;
     }
 
-    public Course createCourse(String name) {
-        Course c = new Course(name);
-        courses.add(c);
-        return c;
+    // ===========================
+    //   COURSE CREATION (WITH CAPACITY)
+    // ===========================
+
+    public Course createCourse(String courseName, int capacity) {
+        Course course = new Course(courseName, capacity);
+        courses.add(course);
+        System.out.println("Created Course: " + courseName + " (Capacity: " + capacity + ")");
+        return course;
     }
 
-    // --- Getters ---
+    // ===========================
+    //   ENROLLMENT
+    // ===========================
+
+    public boolean enrollStudentInCourse(Student student, Course course) {
+        boolean success = course.addStudent(student);
+
+        if (success) {
+            System.out.println("✔ Enrolled " + student.getName() +
+                               " into " + course.getCourseName());
+        } else {
+            System.out.println("❌ Could NOT enroll " + student.getName() +
+                               ". Course '" + course.getCourseName() + "' is FULL!");
+        }
+
+        return success;
+    }
+
+    // ===========================
+    //   LOOKUP METHODS
+    // ===========================
+
+    public Student findStudentById(int id) {
+        return students.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Teacher findTeacherById(int id) {
+        return teachers.stream()
+                .filter(t -> t.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Staff findStaffById(int id) {
+        return staffMembers.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Course findCourseById(int id) {
+        return courses.stream()
+                .filter(c -> c.getCourseId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    // ===========================
+    //   GETTER METHODS
+    // ===========================
+
     public List<Student> getStudents() { return students; }
     public List<Teacher> getTeachers() { return teachers; }
     public List<Staff> getStaffMembers() { return staffMembers; }
     public List<Course> getCourses() { return courses; }
 
-    // --- Lookup Methods ---
-    public Student findStudentById(int id) {
-        return students.stream().filter(s -> s.getId() == id).findFirst().orElse(null);
-    }
-
-    public Course findCourseById(int id) {
-        return courses.stream().filter(c -> c.getCourseId() == id).findFirst().orElse(null);
-    }
-
-    // --- Combined People List ---
     public List<Person> getAllPeople() {
-        List<Person> result = new ArrayList<>();
-        result.addAll(students);
-        result.addAll(teachers);
-        result.addAll(staffMembers);
-        return result;
+        List<Person> combined = new ArrayList<>();
+        combined.addAll(students);
+        combined.addAll(teachers);
+        combined.addAll(staffMembers);
+        return combined;
     }
 
-    // --- Save All Registrations ---
+    // ===========================
+    //   SAVE ALL REGISTRATION DATA
+    // ===========================
+
     public void saveAllRegistrations() {
         storageService.saveData(students, "students.txt");
         storageService.saveData(teachers, "teachers.txt");
         storageService.saveData(staffMembers, "staff.txt");
         storageService.saveData(courses, "courses.txt");
-        System.out.println("Registration saved.");
+        System.out.println("✔ All registration data saved!");
     }
 }

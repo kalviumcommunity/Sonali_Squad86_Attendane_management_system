@@ -100,3 +100,17 @@ Build & run:
 - Teacher and Staff now implement Storable.
 - All records are saved separately: students.txt, teachers.txt, staff.txt, courses.txt, attendance_log.txt.
 
+## Part 10: Capacity Management & SOLID Principles Reflection
+- Added course capacity and internal student enrollment list.
+- Added automatic capacity checking and enrollment prevention when full.
+- Updated RegistrationService to enroll students and manage course creation with capacity.
+- Updated Main to demonstrate successful and failed enrollments.
+- Course.toDataString() now saves the capacity value.
+- Reflected on SOLID principles used:
+    - SRP via RegistrationService and AttendanceService separation
+    - OCP by making Course extendable without modifying core logic
+    - DIP via injecting FileStorageService and RegistrationService
+
+This completes the 10-part project.
+
+

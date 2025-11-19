@@ -7,29 +7,36 @@ public class Main {
         RegistrationService regService = new RegistrationService(storage);
         AttendanceService attendanceService = new AttendanceService(storage, regService);
 
-        // --- Registration ---
+        // ---- REGISTER STUDENTS ----
         Student s1 = regService.registerStudent("Sonali", "10");
         Student s2 = regService.registerStudent("Rohit", "12");
-        Teacher t1 = regService.registerTeacher("Mr. Rao", "DBMS");
-        Staff st1 = regService.registerStaff("Kiran", "Admin");
+        Student s3 = regService.registerStudent("Charitha", "11");
 
-        Course c1 = regService.createCourse("DBMS");
-        Course c2 = regService.createCourse("OOPS");
+        // ---- CREATE COURSES WITH CAPACITY ----
+        Course c1 = regService.createCourse("DBMS", 2);
+        Course c2 = regService.createCourse("OOPS", 1);
 
-        // --- Mark Attendance using IDs only ---
+        // ---- ENROLLMENT (including max-capacity test) ----
+        regService.enrollStudentInCourse(s1, c1);
+        regService.enrollStudentInCourse(s2, c1);
+        regService.enrollStudentInCourse(s3, c1); // ❌ should exceed capacity
+
+        regService.enrollStudentInCourse(s1, c2);
+        regService.enrollStudentInCourse(s2, c2); // ❌ should exceed capacity
+
+        // ---- DISPLAY COURSE DETAILS ----
+        System.out.println("\n=== Course Details ===");
+        c1.displayDetails();
+        c2.displayDetails();
+
+        // OPTIONAL: Attendance only for enrolled students
         attendanceService.markAttendance(s1.getId(), c1.getCourseId(), "Present");
-        attendanceService.markAttendance(s2.getId(), c2.getCourseId(), "Absent");
+        attendanceService.markAttendance(s2.getId(), c1.getCourseId(), "Absent");
 
-        // --- Display Directory ---
-        System.out.println("\n=== School Directory ===");
-        for (Person p : regService.getAllPeople()) {
-            p.displayDetails();
-        }
-
-        // --- Display Attendance ---
+        System.out.println("\n=== Attendance Log ===");
         attendanceService.displayAttendanceLog();
 
-        // --- Save All Data Files ---
+        // ---- SAVE ALL FILES ----
         regService.saveAllRegistrations();
         attendanceService.saveAttendanceData();
     }
